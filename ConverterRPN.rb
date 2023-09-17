@@ -3,25 +3,23 @@ stack = []
 operators = [["+", "-"], ["*", "x", "/"]]
 parenthesis = ["(", ")"]
 
+def find_priority(element, operators)
+  if operators[0].include? element
+    1
+  else
+    2
+  end
+end
+
 ARGV.each do |i|
   #Finding operands
   if !operators[0].include? i and !operators[1].include? i and !parenthesis.include? i
     result += " " + i
   #Finding operators
   elsif operators[0].include? i or operators[1].include? i
-    operator_priority =
-      if operators[0].include? i
-        1
-      else
-        2
-      end
+    operator_priority = find_priority(i, operators)
     loop do
-      stack_operator_priority =
-        if operators[0].include? stack.last
-          1
-        else
-          2
-        end
+      stack_operator_priority = find_priority(stack.last, operators)
       if !stack.empty? and !parenthesis.include? stack.last and stack_operator_priority >= operator_priority
         result += " " + stack.last
         stack.pop
@@ -64,4 +62,5 @@ puts "\n" + result
 puts "P.S. If your input looks exactly as output, try using spacebars between operands and operators."
 puts "If your input doesn`t look the same as you type it and you were using * sign, try using x or \"*\" to input multiplication sign."
 puts "P.P.S. If you want to use parenthesis in your input, use \"(\" and \")\""
+
 
